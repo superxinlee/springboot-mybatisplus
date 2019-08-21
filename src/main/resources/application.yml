@@ -1,0 +1,75 @@
+server:
+  port: 8088
+  servlet:
+    context-path: /demo
+  tomcat:
+    uri-encoding: utf-8
+spring:
+  profiles:
+    active: test
+  resources:
+    static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/,classpath:/templates/
+  devtools:
+    restart:
+      enabled: false
+  jackson:
+    default-property-inclusion: non_null
+  datasource:
+    druid:
+       url: jdbc:mysql://localhost:3306/sell?useUnicode=true&characterEncoding=UTF-8&userSSL=false&serverTimezone=GMT%2B8
+       username: root
+       password: 123456
+       driver-class-name: com.mysql.jdbc.Driver
+       # 连接池配置项
+       ####################################
+       # 初始化连接数量
+       initialSize: 1
+       # 最小空闲连接数
+       minIdle: 3
+       # 最大并发连接数
+       maxActive: 20
+       # 配置获取连接等待超时的时间
+       maxWait: 60000
+       # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+       timeBetweenEvictionRunsMillis: 60000
+       # 配置一个连接在池中最小生存的时间，单位是毫秒
+       minEvictableIdleTimeMillis: 30000
+       validationQuery: select 'x'
+       # 申请连接的时候检测
+       testWhileIdle: true
+       # 申请连接时执行validationQery检测连接是否有效,配置true会降低性能
+       testOnBorrow: false
+       # 归还连接时执行validationQuery检测连接是否有效，配置为true会降低性能
+       testOnReturn: false
+       # 打开PSCache，并且指定每个连接上PSCache的大小
+       poolPreparedStatements: true
+       maxPoolPreparedStatementPerConnectionSize: 20
+       # 属性类型是字符串，通过别名的方式配置扩展插件，常用的插件有：监控统计用的filter:stat
+      #
+      #日志用的filter:log4j
+      #
+      #防御SQL注入的filter:wall
+       filters: stat,wall,slf4j
+       connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+       db-type: mysql
+
+mybatis-plus:
+  mapper-locations: classpath:/mapper/*Mapper.xml
+  #实体类
+  typeAliasesPackage: com.xueduoduo.elective.entity
+  global-config:
+    db-config:
+      id-type: id_worker
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+      db-type: mysql
+      field-strategy: not_null
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+
+
+
+
